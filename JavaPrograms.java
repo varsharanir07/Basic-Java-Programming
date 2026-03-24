@@ -1,123 +1,147 @@
 import java.util.Scanner;
 
-public class JavaPrograms2 {
+public class JavaPrograms3 {
 
     public static void main(String[] args) {
 
         Scanner sc = new Scanner(System.in);
 
-        votingEligibility(sc);
-        numberCheck(sc);
-        multiplicationTable(sc);
-        storeAndSum(sc);
+        employeeBonus(sc);
+        friendsComparison(sc);
+        digitAnalysis(sc);
 
         sc.close();
     }
 
-    // 1️⃣ Voting Eligibility for 10 Students
-    public static void votingEligibility(Scanner sc) {
-        int[] age = new int[10];
+    // 1️⃣ Employee Bonus Program
+    public static void employeeBonus(Scanner sc) {
 
-        System.out.println("Enter ages of 10 students:");
-        for (int i = 0; i < age.length; i++) {
+        double[] salary = new double[10];
+        double[] years = new double[10];
+        double[] bonus = new double[10];
+        double[] newSalary = new double[10];
+
+        double totalBonus = 0, totalOldSalary = 0, totalNewSalary = 0;
+
+        System.out.println("Enter salary and years of service for 10 employees:");
+
+        for (int i = 0; i < 10; i++) {
+
+            System.out.println("Employee " + (i + 1));
+
+            System.out.print("Enter salary: ");
+            salary[i] = sc.nextDouble();
+
+            System.out.print("Enter years of service: ");
+            years[i] = sc.nextDouble();
+
+            if (salary[i] <= 0 || years[i] < 0) {
+                System.out.println("Invalid input. Please re-enter.");
+                i--; // repeat input
+                continue;
+            }
+        }
+
+        for (int i = 0; i < 10; i++) {
+
+            if (years[i] > 5) {
+                bonus[i] = salary[i] * 0.05;
+            } else {
+                bonus[i] = salary[i] * 0.02;
+            }
+
+            newSalary[i] = salary[i] + bonus[i];
+
+            totalBonus += bonus[i];
+            totalOldSalary += salary[i];
+            totalNewSalary += newSalary[i];
+        }
+
+        System.out.println("\nTotal Bonus = " + totalBonus);
+        System.out.println("Total Old Salary = " + totalOldSalary);
+        System.out.println("Total New Salary = " + totalNewSalary);
+        System.out.println();
+    }
+
+    // 2️⃣ Youngest and Tallest Friends
+    public static void friendsComparison(Scanner sc) {
+
+        String[] names = {"Amar", "Akbar", "Anthony"};
+        int[] age = new int[3];
+        double[] height = new double[3];
+
+        for (int i = 0; i < 3; i++) {
+            System.out.println("Enter details for " + names[i]);
+
+            System.out.print("Age: ");
             age[i] = sc.nextInt();
+
+            System.out.print("Height: ");
+            height[i] = sc.nextDouble();
         }
 
-        for (int i = 0; i < age.length; i++) {
-            if (age[i] < 0) {
-                System.out.println("Invalid age");
-            } else if (age[i] >= 18) {
-                System.out.println("The student with the age " + age[i] + " can vote");
-            } else {
-                System.out.println("The student with the age " + age[i] + " cannot vote");
+        int minAge = age[0];
+        int youngestIndex = 0;
+
+        double maxHeight = height[0];
+        int tallestIndex = 0;
+
+        for (int i = 1; i < 3; i++) {
+
+            if (age[i] < minAge) {
+                minAge = age[i];
+                youngestIndex = i;
+            }
+
+            if (height[i] > maxHeight) {
+                maxHeight = height[i];
+                tallestIndex = i;
             }
         }
 
+        System.out.println("Youngest friend is " + names[youngestIndex]);
+        System.out.println("Tallest friend is " + names[tallestIndex]);
         System.out.println();
     }
 
-    // 2️⃣ Positive / Negative / Zero + Even/Odd + Compare
-    public static void numberCheck(Scanner sc) {
-        int[] arr = new int[5];
+    // 3️⃣ Largest and Second Largest Digit
+    public static void digitAnalysis(Scanner sc) {
 
-        System.out.println("Enter 5 numbers:");
-        for (int i = 0; i < arr.length; i++) {
-            arr[i] = sc.nextInt();
-        }
-
-        for (int i = 0; i < arr.length; i++) {
-            if (arr[i] > 0) {
-                if (arr[i] % 2 == 0) {
-                    System.out.println(arr[i] + " is positive and even");
-                } else {
-                    System.out.println(arr[i] + " is positive and odd");
-                }
-            } else if (arr[i] < 0) {
-                System.out.println(arr[i] + " is negative");
-            } else {
-                System.out.println(arr[i] + " is zero");
-            }
-        }
-
-        // Compare first and last
-        if (arr[0] == arr[arr.length - 1]) {
-            System.out.println("First and last elements are equal");
-        } else if (arr[0] > arr[arr.length - 1]) {
-            System.out.println("First element is greater than last");
-        } else {
-            System.out.println("First element is less than last");
-        }
-
-        System.out.println();
-    }
-
-    // 3️⃣ Multiplication Table
-    public static void multiplicationTable(Scanner sc) {
         System.out.println("Enter a number:");
         int num = sc.nextInt();
 
-        int[] table = new int[10];
-
-        for (int i = 1; i <= 10; i++) {
-            table[i - 1] = num * i;
-        }
-
-        for (int i = 1; i <= 10; i++) {
-            System.out.println(num + " * " + i + " = " + table[i - 1]);
-        }
-
-        System.out.println();
-    }
-
-    // 4️⃣ Store Numbers Until Limit / Stop + Sum
-    public static void storeAndSum(Scanner sc) {
-        double[] arr = new double[10];
-        double total = 0.0;
+        int maxDigit = 10;
+        int[] digits = new int[maxDigit];
         int index = 0;
 
-        while (true) {
-            System.out.println("Enter a number:");
-            double num = sc.nextDouble();
+        num = Math.abs(num); // handle negative numbers
 
-            if (num <= 0) {
-                break;
-            }
+        while (num != 0) {
 
-            arr[index] = num;
+            digits[index] = num % 10;
+            num = num / 10;
             index++;
 
-            if (index == 10) {
+            if (index == maxDigit) {
                 break;
             }
         }
 
-        System.out.println("Entered numbers:");
+        int largest = -1;
+        int secondLargest = -1;
+
         for (int i = 0; i < index; i++) {
-            System.out.print(arr[i] + " ");
-            total += arr[i];
+
+            if (digits[i] > largest) {
+                secondLargest = largest;
+                largest = digits[i];
+            } else if (digits[i] > secondLargest && digits[i] != largest) {
+                secondLargest = digits[i];
+            }
         }
 
-        System.out.println("\nTotal = " + total);
+        System.out.println("Largest digit = " + largest);
+        System.out.println("Second largest digit = " + secondLargest);
         System.out.println();
     }
 }
