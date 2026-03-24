@@ -1,96 +1,123 @@
 import java.util.Scanner;
 
-public class JavaPrograms {
+public class JavaPrograms2 {
 
     public static void main(String[] args) {
 
         Scanner sc = new Scanner(System.in);
 
-        celsiusToFahrenheit(sc);
-        fahrenheitToCelsius(sc);
-        totalIncome(sc);
-        travelDetails(sc);
+        votingEligibility(sc);
+        numberCheck(sc);
+        multiplicationTable(sc);
+        storeAndSum(sc);
 
         sc.close();
     }
 
-    // 1️⃣ Celsius to Fahrenheit
-    public static void celsiusToFahrenheit(Scanner sc) {
-        System.out.println("Enter temperature in Celsius:");
-        double celsius = sc.nextDouble();
+    // 1️⃣ Voting Eligibility for 10 Students
+    public static void votingEligibility(Scanner sc) {
+        int[] age = new int[10];
 
-        double fahrenheitResult = (celsius * 9 / 5) + 32;
+        System.out.println("Enter ages of 10 students:");
+        for (int i = 0; i < age.length; i++) {
+            age[i] = sc.nextInt();
+        }
 
-        System.out.println("The " + celsius + " celsius is "
-                + fahrenheitResult + " fahrenheit");
+        for (int i = 0; i < age.length; i++) {
+            if (age[i] < 0) {
+                System.out.println("Invalid age");
+            } else if (age[i] >= 18) {
+                System.out.println("The student with the age " + age[i] + " can vote");
+            } else {
+                System.out.println("The student with the age " + age[i] + " cannot vote");
+            }
+        }
+
         System.out.println();
     }
 
-    // 2️⃣ Fahrenheit to Celsius
-    public static void fahrenheitToCelsius(Scanner sc) {
-        System.out.println("Enter temperature in Fahrenheit:");
-        double fahrenheit = sc.nextDouble();
+    // 2️⃣ Positive / Negative / Zero + Even/Odd + Compare
+    public static void numberCheck(Scanner sc) {
+        int[] arr = new int[5];
 
-        double celsiusResult = (fahrenheit - 32) * 5 / 9;
+        System.out.println("Enter 5 numbers:");
+        for (int i = 0; i < arr.length; i++) {
+            arr[i] = sc.nextInt();
+        }
 
-        System.out.println("The " + fahrenheit + " fahrenheit is "
-                + celsiusResult + " celsius");
+        for (int i = 0; i < arr.length; i++) {
+            if (arr[i] > 0) {
+                if (arr[i] % 2 == 0) {
+                    System.out.println(arr[i] + " is positive and even");
+                } else {
+                    System.out.println(arr[i] + " is positive and odd");
+                }
+            } else if (arr[i] < 0) {
+                System.out.println(arr[i] + " is negative");
+            } else {
+                System.out.println(arr[i] + " is zero");
+            }
+        }
+
+        // Compare first and last
+        if (arr[0] == arr[arr.length - 1]) {
+            System.out.println("First and last elements are equal");
+        } else if (arr[0] > arr[arr.length - 1]) {
+            System.out.println("First element is greater than last");
+        } else {
+            System.out.println("First element is less than last");
+        }
+
         System.out.println();
     }
 
-    // 3️⃣ Total Income (Salary + Bonus)
-    public static void totalIncome(Scanner sc) {
-        System.out.println("Enter salary:");
-        double salary = sc.nextDouble();
+    // 3️⃣ Multiplication Table
+    public static void multiplicationTable(Scanner sc) {
+        System.out.println("Enter a number:");
+        int num = sc.nextInt();
 
-        System.out.println("Enter bonus:");
-        double bonus = sc.nextDouble();
+        int[] table = new int[10];
 
-        double income = salary + bonus;
+        for (int i = 1; i <= 10; i++) {
+            table[i - 1] = num * i;
+        }
 
-        System.out.println("The salary is INR " + salary +
-                " and bonus is INR " + bonus +
-                ". Hence Total Income is INR " + income);
+        for (int i = 1; i <= 10; i++) {
+            System.out.println(num + " * " + i + " = " + table[i - 1]);
+        }
+
         System.out.println();
     }
 
-    // 4️⃣ Travel Details Program
-    public static void travelDetails(Scanner sc) {
+    // 4️⃣ Store Numbers Until Limit / Stop + Sum
+    public static void storeAndSum(Scanner sc) {
+        double[] arr = new double[10];
+        double total = 0.0;
+        int index = 0;
 
-        sc.nextLine();  // Clear buffer
+        while (true) {
+            System.out.println("Enter a number:");
+            double num = sc.nextDouble();
 
-        System.out.println("Enter your name:");
-        String name = sc.nextLine();
+            if (num <= 0) {
+                break;
+            }
 
-        System.out.println("Enter From City:");
-        String fromCity = sc.nextLine();
+            arr[index] = num;
+            index++;
 
-        System.out.println("Enter Via City:");
-        String viaCity = sc.nextLine();
+            if (index == 10) {
+                break;
+            }
+        }
 
-        System.out.println("Enter To City:");
-        String toCity = sc.nextLine();
+        System.out.println("Entered numbers:");
+        for (int i = 0; i < index; i++) {
+            System.out.print(arr[i] + " ");
+            total += arr[i];
+        }
 
-        System.out.println("Enter distance from FromCity to ViaCity (in miles):");
-        double fromToVia = sc.nextDouble();
-
-        System.out.println("Enter distance from ViaCity to FinalCity (in miles):");
-        double viaToFinalCity = sc.nextDouble();
-
-        System.out.println("Enter time from FromCity to ViaCity (in minutes):");
-        double timeFromToVia = sc.nextDouble();
-
-        System.out.println("Enter time from ViaCity to FinalCity (in minutes):");
-        double timeViaToFinalCity = sc.nextDouble();
-
-        double totalDistanceMiles = fromToVia + viaToFinalCity;
-        double totalDistanceKm = totalDistanceMiles * 1.60934; // miles to km
-        double totalTime = timeFromToVia + timeViaToFinalCity;
-
-        System.out.println("The Total Distance travelled by " + name +
-                " from " + fromCity + " to " + toCity +
-                " via " + viaCity + " is " +
-                totalDistanceKm + " km and the Total Time taken is "
-                + totalTime + " minutes");
+        System.out.println("\nTotal = " + total);
+        System.out.println();
     }
 }
