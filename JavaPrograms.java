@@ -6,152 +6,221 @@ public class JavaPrograms {
 
         Scanner sc = new Scanner(System.in);
 
-        simpleInterest(sc);
-        handshakes(sc);
-        athleteRounds(sc);
-        numberCheck(sc);
-        sumNatural(sc);
-        minMax(sc);
-        division(sc);
-        chocolates(sc);
-        windChill(sc);
-        trigonometry(sc);
+        factorsProgram(sc);
+        recursiveSum(sc);
+        leapYear(sc);
+        unitConverter(sc);
+        studentVote(sc);
+        friends(sc);
+        numberAnalysis(sc);
+        bmiProgram(sc);
+        quadratic(sc);
+        randomArray(sc);
 
         sc.close();
     }
 
-    // 1️⃣ Simple Interest
-    public static void simpleInterest(Scanner sc) {
-        System.out.println("Enter Principal, Rate, Time:");
-        double p = sc.nextDouble();
-        double r = sc.nextDouble();
-        double t = sc.nextDouble();
+    // 1️⃣ Factors Program
+    public static void factorsProgram(Scanner sc) {
+        System.out.println("Enter number:");
+        int num = sc.nextInt();
 
-        double si = (p * r * t) / 100;
+        int count = 0;
+        for (int i = 1; i <= num; i++)
+            if (num % i == 0) count++;
 
-        System.out.println("Simple Interest = " + si);
+        int[] factors = new int[count];
+        int index = 0;
+
+        for (int i = 1; i <= num; i++)
+            if (num % i == 0) factors[index++] = i;
+
+        int sum = 0, product = 1, squareSum = 0;
+
+        for (int f : factors) {
+            sum += f;
+            product *= f;
+            squareSum += Math.pow(f, 2);
+        }
+
+        System.out.println("Factors:");
+        for (int f : factors) System.out.print(f + " ");
+
+        System.out.println("\nSum = " + sum);
+        System.out.println("Product = " + product);
+        System.out.println("Sum of Squares = " + squareSum);
         System.out.println();
     }
 
-    // 2️⃣ Handshakes
-    public static void handshakes(Scanner sc) {
-        System.out.println("Enter number of students:");
+    // 2️⃣ Recursive Sum
+    public static void recursiveSum(Scanner sc) {
+        System.out.println("Enter n:");
         int n = sc.nextInt();
 
-        int result = (n * (n - 1)) / 2;
+        int rec = sumRec(n);
+        int formula = n * (n + 1) / 2;
 
-        System.out.println("Handshakes = " + result);
+        System.out.println("Recursive = " + rec);
+        System.out.println("Formula = " + formula);
         System.out.println();
     }
 
-    // 3️⃣ Athlete Rounds
-    public static void athleteRounds(Scanner sc) {
-        System.out.println("Enter 3 sides:");
+    public static int sumRec(int n) {
+        if (n == 0) return 0;
+        return n + sumRec(n - 1);
+    }
+
+    // 3️⃣ Leap Year
+    public static void leapYear(Scanner sc) {
+        System.out.println("Enter year:");
+        int y = sc.nextInt();
+
+        if ((y % 4 == 0 && y % 100 != 0) || y % 400 == 0)
+            System.out.println("Leap Year");
+        else
+            System.out.println("Not Leap Year");
+
+        System.out.println();
+    }
+
+    // 4️⃣ Unit Converter (basic)
+    public static void unitConverter(Scanner sc) {
+        System.out.println("Enter km:");
+        double km = sc.nextDouble();
+
+        double miles = km * 0.621371;
+
+        System.out.println("Miles = " + miles);
+        System.out.println();
+    }
+
+    // 5️⃣ Student Vote
+    public static void studentVote(Scanner sc) {
+        int[] ages = new int[10];
+
+        for (int i = 0; i < 10; i++) {
+            System.out.println("Enter age:");
+            ages[i] = sc.nextInt();
+
+            if (ages[i] >= 18)
+                System.out.println("Can Vote");
+            else
+                System.out.println("Cannot Vote");
+        }
+
+        System.out.println();
+    }
+
+    // 6️⃣ Friends (Youngest & Tallest)
+    public static void friends(Scanner sc) {
+        int[] age = new int[3];
+        int[] height = new int[3];
+
+        System.out.println("Enter ages:");
+        for (int i = 0; i < 3; i++) age[i] = sc.nextInt();
+
+        System.out.println("Enter heights:");
+        for (int i = 0; i < 3; i++) height[i] = sc.nextInt();
+
+        int minAge = age[0], maxHeight = height[0];
+
+        for (int i = 1; i < 3; i++) {
+            if (age[i] < minAge) minAge = age[i];
+            if (height[i] > maxHeight) maxHeight = height[i];
+        }
+
+        System.out.println("Youngest age = " + minAge);
+        System.out.println("Tallest height = " + maxHeight);
+        System.out.println();
+    }
+
+    // 7️⃣ Number Analysis
+    public static void numberAnalysis(Scanner sc) {
+        int[] arr = new int[5];
+
+        for (int i = 0; i < 5; i++) {
+            arr[i] = sc.nextInt();
+
+            if (arr[i] >= 0) {
+                if (arr[i] % 2 == 0)
+                    System.out.println("Positive Even");
+                else
+                    System.out.println("Positive Odd");
+            } else {
+                System.out.println("Negative");
+            }
+        }
+
+        if (arr[0] > arr[4]) System.out.println("First greater");
+        else if (arr[0] < arr[4]) System.out.println("Last greater");
+        else System.out.println("Equal");
+
+        System.out.println();
+    }
+
+    // 8️⃣ BMI Program
+    public static void bmiProgram(Scanner sc) {
+        double[][] data = new double[10][3];
+
+        for (int i = 0; i < 10; i++) {
+            System.out.println("Enter weight(kg) and height(cm):");
+            data[i][0] = sc.nextDouble();
+            data[i][1] = sc.nextDouble();
+
+            double h = data[i][1] / 100;
+            data[i][2] = data[i][0] / (h * h);
+
+            System.out.println("BMI = " + data[i][2]);
+        }
+
+        System.out.println();
+    }
+
+    // 9️⃣ Quadratic Equation
+    public static void quadratic(Scanner sc) {
+        System.out.println("Enter a b c:");
         double a = sc.nextDouble();
         double b = sc.nextDouble();
         double c = sc.nextDouble();
 
-        double perimeter = a + b + c;
-        double rounds = 5000 / perimeter;
+        double d = b * b - 4 * a * c;
 
-        System.out.println("Rounds needed = " + rounds);
-        System.out.println();
-    }
-
-    // 4️⃣ Positive / Negative / Zero
-    public static void numberCheck(Scanner sc) {
-        System.out.println("Enter a number:");
-        int num = sc.nextInt();
-
-        if (num > 0)
-            System.out.println("1");
-        else if (num < 0)
-            System.out.println("-1");
-        else
-            System.out.println("0");
-
-        System.out.println();
-    }
-
-    // 5️⃣ Sum of n Natural Numbers
-    public static void sumNatural(Scanner sc) {
-        System.out.println("Enter n:");
-        int n = sc.nextInt();
-
-        int sum = 0;
-        for (int i = 1; i <= n; i++) {
-            sum += i;
+        if (d > 0) {
+            double r1 = (-b + Math.sqrt(d)) / (2 * a);
+            double r2 = (-b - Math.sqrt(d)) / (2 * a);
+            System.out.println("Roots: " + r1 + ", " + r2);
+        } else if (d == 0) {
+            double r = -b / (2 * a);
+            System.out.println("Root: " + r);
+        } else {
+            System.out.println("No real roots");
         }
 
-        System.out.println("Sum = " + sum);
         System.out.println();
     }
 
-    // 6️⃣ Smallest & Largest
-    public static void minMax(Scanner sc) {
-        System.out.println("Enter 3 numbers:");
-        int a = sc.nextInt();
-        int b = sc.nextInt();
-        int c = sc.nextInt();
+    // 🔟 Random Array
+    public static void randomArray(Scanner sc) {
+        int[] arr = new int[5];
 
-        int min = Math.min(a, Math.min(b, c));
-        int max = Math.max(a, Math.max(b, c));
+        for (int i = 0; i < 5; i++) {
+            arr[i] = (int)(Math.random() * 9000) + 1000;
+            System.out.print(arr[i] + " ");
+        }
 
-        System.out.println("Smallest = " + min);
-        System.out.println("Largest = " + max);
-        System.out.println();
-    }
+        int min = arr[0], max = arr[0], sum = 0;
 
-    // 7️⃣ Quotient & Remainder
-    public static void division(Scanner sc) {
-        System.out.println("Enter number and divisor:");
-        int num = sc.nextInt();
-        int d = sc.nextInt();
+        for (int x : arr) {
+            sum += x;
+            min = Math.min(min, x);
+            max = Math.max(max, x);
+        }
 
-        int q = num / d;
-        int r = num % d;
+        double avg = (double) sum / arr.length;
 
-        System.out.println("Quotient = " + q);
-        System.out.println("Remainder = " + r);
-        System.out.println();
-    }
-
-    // 8️⃣ Chocolates Distribution
-    public static void chocolates(Scanner sc) {
-        System.out.println("Enter chocolates and children:");
-        int ch = sc.nextInt();
-        int kids = sc.nextInt();
-
-        int each = ch / kids;
-        int rem = ch % kids;
-
-        System.out.println("Each gets = " + each);
-        System.out.println("Remaining = " + rem);
-        System.out.println();
-    }
-
-    // 9️⃣ Wind Chill
-    public static void windChill(Scanner sc) {
-        System.out.println("Enter temperature and wind speed:");
-        double t = sc.nextDouble();
-        double v = sc.nextDouble();
-
-        double wc = 35.74 + 0.6215 * t + (0.4275 * t - 35.75) * Math.pow(v, 0.16);
-
-        System.out.println("Wind Chill = " + wc);
-        System.out.println();
-    }
-
-    // 🔟 Trigonometric Functions
-    public static void trigonometry(Scanner sc) {
-        System.out.println("Enter angle in degrees:");
-        double angle = sc.nextDouble();
-
-        double rad = Math.toRadians(angle);
-
-        System.out.println("Sin = " + Math.sin(rad));
-        System.out.println("Cos = " + Math.cos(rad));
-        System.out.println("Tan = " + Math.tan(rad));
+        System.out.println("\nAvg = " + avg);
+        System.out.println("Min = " + min);
+        System.out.println("Max = " + max);
         System.out.println();
     }
 }
